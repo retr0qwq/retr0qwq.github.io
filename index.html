@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎来到狗修金的计网作业网站</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            margin: 0;
+            padding: 0;
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85); 
+            color: white;
+            z-index: 9999; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: opacity 0.8s;
+        }
+        
+        #welcome-screen h1 {
+            color: white;
+            border: none;
+            font-size: 40px;
+            text-shadow: 0 0 20px #ff69b4;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .container {
+            position: relative;
+            max-width: 800px;
+            margin: 80px auto 40px auto; 
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            z-index: 10; 
+            opacity: 0; 
+            transition: opacity 1s;
+        }
+
+        .my-avatar {
+            position: absolute;
+            top: -50px;
+            left: -50px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 6px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 20;
+            cursor: pointer;
+        }
+
+        .my-avatar:hover {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .info-card {
+            background-color: #fff0f5;
+            border-left: 5px solid #ff69b4;
+            padding: 15px 25px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #555;
+            border-bottom: 2px dashed #ffb6c1;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .image-gallery img {
+            width: 220px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .image-gallery img:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 182, 193, 0.6);
+            z-index: 15;
+        }
+
+        .star {
+            position: fixed;
+            top: -10px;
+            user-select: none;
+            pointer-events: none; 
+            z-index: 5; 
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="welcome-screen" onclick="enterSite()">
+        <h1>✨ 点击进入丛雨の私密空间 ✨</h1>
+        <p>Click anywhere to enter</p>
+    </div>
+
+    <audio id="bgm">
+        <source src="ciallo.mp3" type="audio/mpeg">
+    </audio>
+    <div class="container" id="main-content">
+        <img src="logo.jpg" alt="头像" class="my-avatar">
+
+        <h1>欢迎来到狗修金的计网作业网站</h1>
+        <div class="info-card">
+            <p><strong>专业：</strong>计算机科学与技术</p>
+            <p><strong>学号：</strong>2211312minor</p>
+            <p><strong>姓名：</strong>贾景顺</p>
+        </div>
+
+        <h1>Ciallo～(∠・ω < )⌒☆</h1>
+        
+        <div class="image-gallery">
+            <img src="1.jpg">
+            <img src="2.jpg">
+            <img src="3.jpg">
+            <img src="4.jpg">
+            <img src="5.jpg">
+            <img src="6.jpg">
+        </div>
+
+        <div class="footer">
+            Computer Network Experiment © 2026
+        </div>
+    </div>
+
+    <script>
+
+        function enterSite() {
+            var welcome = document.getElementById('welcome-screen');
+            var mainContent = document.getElementById('main-content');
+            var music = document.getElementById('bgm');
+            music.play().catch(function(error) {
+                console.log("音乐播放失败，可能文件路径不对:", error);
+            });
+
+            welcome.style.opacity = '0';
+            setTimeout(function(){
+                welcome.style.display = 'none';
+            }, 800);
+
+            mainContent.style.opacity = '1';
+
+            setInterval(createStar, 150); 
+        }
+
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            const shapes = ['★', '✨', '✦', '⦁']; 
+            star.innerHTML = shapes[Math.floor(Math.random() * shapes.length)];
+   
+            const colors = ['#FF69B4', '#87CEFA', '#FFA500', '#9370DB', '#32CD32'];
+            star.style.color = colors[Math.floor(Math.random() * colors.length)];
+            
+            star.style.left = Math.random() * 100 + 'vw';
+            const size = Math.random() * 200 + 10;
+            star.style.fontSize = size + 'px';
+            const duration = Math.random() * 3 + 2; 
+            star.style.animationDuration = duration + 's';
+
+            document.body.appendChild(star);
+            setTimeout(() => {
+                star.remove();
+            }, duration * 1000);
+        }
+    </script>
+</body>
+</html>
