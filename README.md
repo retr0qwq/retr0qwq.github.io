@@ -1,2 +1,4 @@
 # retr0qwq.github.io
-personal webpage
+This is my personal git-website.Welcome!
+
+Ciallo～(∠・ω < )⌒☆
